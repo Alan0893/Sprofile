@@ -16,6 +16,7 @@ const cors = require('cors');
 const crypto = require('crypto');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
+const history = require('connect-history-api-fallback');
 
 // Creating express app
 const app = express();
