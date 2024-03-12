@@ -4,12 +4,15 @@ import { getHashParams } from '../utils';
 // TOKENS ******************************************************************************************
 const EXPIRATION_TIME = 3600 * 1000;	// 1 hour
 
+// Setting tokens to local storage
 const setTokenTimestamp = () => window.localStorage.setItem('spotify_token_timestamp', Date.now());
 const setLocalAccessToken = (token) => {
   setTokenTimestamp();
   window.localStorage.setItem('spotify_access_token', token);
 };
 const setLocalRefreshToken = (token) => window.localStorage.setItem('spotify_refresh_token', token);
+
+// Getting tokens from local storage
 const getTokenTimestamp = () => window.localStorage.getItem('spotify_token_timestamp');
 const getLocalAccessToken = () => window.localStorage.getItem('spotify_access_token');
 const getLocalRefreshToken = () => window.localStorage.getItem('spotify_refresh_token');
@@ -18,8 +21,9 @@ const getLocalRefreshToken = () => window.localStorage.getItem('spotify_refresh_
 const refreshAccessToken = async () => {
   try {
     const { data } = await axios.get(`/refresh_token?refresh_token=${getLocalRefreshToken()}`);
-    const { access_token } = data;
+    const { access_token, refresh_token } = data;
     setLocalAccessToken(access_token);
+    setLocalRefreshToken(refresh_token);
     window.location.reload();
     return;
   } catch (e) {
@@ -38,7 +42,6 @@ export const getAccessToken = () => {
 
   // Token has expired
   if (Date.now() - getTokenTimestamp() > EXPIRATION_TIME) {
-    console.warn('Access token has expired, refreshing...');
     refreshAccessToken();
   }
 
@@ -73,6 +76,7 @@ const headers = {
  * https://developer.spotify.com/documentation/web-api/reference/users-profile/get-current-users-profile/
  */
 export const getUser = () => axios.get('https://api.spotify.com/v1/me', { headers });
+console.log(await getUser());
 
 /**
  * Get User's Followed Artists
