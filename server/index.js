@@ -1,8 +1,6 @@
 // Loading environment variables from the .env file into process.env
-const dotenv = require('dotenv');
 const path = require('path');
-const envPath = path.resolve(__dirname, '../', '.env')
-dotenv.config({ path: envPath });
+require('dotenv').config({ path: path.resolve(__dirname, '../', '.env') });
 
 // Getting environment variables 
 const CLIENT_ID = process.env.CLIENT_ID;
