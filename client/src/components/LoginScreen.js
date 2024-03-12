@@ -3,7 +3,7 @@ import { theme, mixins, Main } from '../styles';
 
 const { colors, fontSizes } = theme;
 
-const LOGIN_URI = 'https://localhost:3000/login';
+const LOGIN_URI = 'http://localhost:3000/login';
 
 const Login = styled(Main)`
   ${mixins.flexCenter};
