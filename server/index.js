@@ -1,15 +1,17 @@
-// Loading environment variables for the .env file into process.env
+// Loading environment variables from the .env file into process.env
+const dotenv = require('dotenv');
 const path = require('path');
-const dotenv = require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const envPath = path.resolve(__dirname, '../', '.env')
+dotenv.config({ path: envPath });
 
-// Getting environment variables
+// Getting environment variables 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const CLIENT_URI = process.env.CLIENT_URI;
-const REDIRECT_URI = process.env.REDIRECT_URI;
+let REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:3000/callback';
+let FRONTEND_URI = process.env.FRONTEND_URI || 'http://localhost:3000';
 const PORT = process.env.PORT || 3000;
 
-// Required modules
+// Requiring neccessary packages
 const express = require('express');
 const request = require('request');
 const cors = require('cors');
@@ -18,11 +20,22 @@ const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const history = require('connect-history-api-fallback');
 
-// Creating express app
+// Generate a random string with specified length
+const generateRandomString = (length) => {
+  return crypto
+  .randomBytes(60)
+  .toString('hex')
+  .slice(0, length);
+}
+
+const stateKey = 'spotify_auth_state';
+
+// Creating an express app
 const app = express();
 
-// Priority serve any static files
+// Priority serve any static files.
 app.use(express.static(path.resolve(__dirname, '../client/build')));
+
 app.use(express.static(path.resolve(__dirname, '../client/build')))
   .use(cors())
   .use(cookieParser())
@@ -38,29 +51,18 @@ app.use(express.static(path.resolve(__dirname, '../client/build')))
   )
   .use(express.static(path.resolve(__dirname, '../client/build')));
 
-// SPOTIFY WORK
-const generateRandomString = (length) => {
-  return crypto
-  .randomBytes(60)
-  .toString('hex')
-  .slice(0, length);
-}
-
-const stateKey = 'spotify_auth_state';
-
-// ROUTING **************************************************************
 // Default Home Page
 app.get('/', function (req, res) {
   res.render(path.resolve(__dirname, '../client/build/index.html'));
 });
 
 // Login Page
-app.get('/login', function(req, res) {
-	const state = generateRandomString(16);
-	res.cookie(stateKey, state);
+app.get('/login', function (req, res) {
+  const state = generateRandomString(16);
+  res.cookie(stateKey, state);
 
-	// Authorization request
-	const scope =
+  // your application requests authorization
+  const scope =
     'user-read-private user-read-email user-read-recently-played user-top-read user-follow-read user-follow-modify playlist-read-private playlist-read-collaborative playlist-modify-public';
 
   res.redirect(
@@ -72,11 +74,11 @@ app.get('/login', function(req, res) {
       state: state,
     })}`,
   );
-})
+});
 
-
-// Callback Page -  Getting Data from the API
+// Getting Data from the api
 app.get('/callback', function (req, res) {
+  // your application requests refresh and access tokens after checking the state parameter
   const code = req.query.code || null;
   const state = req.query.state || null;
   const storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -106,7 +108,7 @@ app.get('/callback', function (req, res) {
         const refresh_token = body.refresh_token;
 
         res.redirect(
-          `${CLIENT_URI}/#${querystring.stringify({
+          `${FRONTEND_URI}/#${querystring.stringify({
             access_token,
             refresh_token,
           })}`,
@@ -118,7 +120,7 @@ app.get('/callback', function (req, res) {
   }
 });
 
-// Refresh Token
+// Refreshing the access token
 app.get('/refresh_token', function (req, res) {
   const refresh_token = req.query.refresh_token;
   const authOptions = {
@@ -144,10 +146,10 @@ app.get('/refresh_token', function (req, res) {
 });
 
 // All remaining requests return the React app, so it can handle routing.
-app.get('*', function (req, res) {
-  res.sendFile(path.resolve(__dirname, '../client/public', 'index.html'));
+app.get('*', function (request, response) {
+  response.sendFile(path.resolve(__dirname, '../client/public', 'index.html'));
 });
 
 app.listen(PORT, function () {
-  console.warn(`Listening on port ${PORT}`);
+  console.log(`Listening on port ${PORT}`);
 });
