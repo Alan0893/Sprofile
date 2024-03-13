@@ -44,7 +44,7 @@ const Container = styled.nav`
   }
 `;
 const Logo = styled.div`
-  color: ${colors.green};
+  color: ${colors.default};
   margin-top: 30px;
   width: 70px;
   height: 70px;
@@ -54,7 +54,7 @@ const Logo = styled.div`
   `};
   &:hover,
   &:focus {
-    color: ${colors.offGreen};
+    color: ${colors.offBlue};
   }
   svg {
     width: 50px;
@@ -114,10 +114,10 @@ const MenuItem = styled.li`
     &.active {
       color: ${colors.white};
       background-color: ${colors.black};
-      border-left: 5px solid ${colors.offGreen};
+      border-left: 5px solid ${colors.offBlue};
       ${media.tablet`
         border-left: 0;
-        border-top: 3px solid ${colors.offGreen};
+        border-top: 3px solid ${colors.offBlue};
       `};
     }
   }

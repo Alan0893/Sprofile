@@ -62,7 +62,7 @@ const Description = styled.p`
   }
 `;
 const RecButton = styled(Link)`
-  ${mixins.greenButton};
+  ${mixins.defaultButton};
   margin-bottom: ${spacing.lg};
 `;
 const Owner = styled.p`

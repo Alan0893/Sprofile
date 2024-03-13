@@ -15,7 +15,7 @@ const Login = styled(Main)`
 `;
 const LoginButton = styled.a`
   display: inline-block;
-  background-color: ${colors.green};
+  background-color: ${colors.default};
   color: ${colors.white};
   border-radius: 30px;
   padding: 17px 35px;
@@ -27,7 +27,7 @@ const LoginButton = styled.a`
   text-align: center;
   &:hover,
   &:focus {
-    background-color: ${colors.offGreen};
+    background-color: ${colors.offBlue};
   }
 `;
 

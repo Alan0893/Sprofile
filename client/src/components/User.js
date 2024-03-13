@@ -32,7 +32,7 @@ const NoAvatar = styled.div`
 const UserName = styled.a`
   &:hover,
   &:focus {
-    color: ${colors.offGreen};
+    color: ${colors.offBlue};
   }
 `;
 const Name = styled.h1`
@@ -56,7 +56,7 @@ const Stat = styled.div`
   text-align: center;
 `;
 const Number = styled.div`
-  color: ${colors.green};
+  color: ${colors.default};
   font-weight: 700;
   font-size: ${fontSizes.md};
 `;

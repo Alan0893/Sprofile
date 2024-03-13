@@ -34,7 +34,7 @@ const PlaylistHeading = styled.div`
   }
 `;
 const SaveButton = styled.button`
-  ${mixins.greenButton};
+  ${mixins.defaultButton};
 `;
 const OpenButton = styled.a`
   ${mixins.button};
@@ -45,7 +45,7 @@ const TracksContainer = styled.ul`
 const PlaylistLink = styled(Link)`
   &:hover,
   &:focus {
-    color: ${colors.offGreen};
+    color: ${colors.offBlue};
   }
 `;
 
