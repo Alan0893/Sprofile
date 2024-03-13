@@ -111,14 +111,16 @@ const Playlists = () => {
   return (
     <Main>
       <h2>Your Playlists</h2>
+
       <Wrapper>
         <PlaylistsContainer>
           {playlists ? (
             playlists.items.map(({ id, images, name, tracks }, i) => (
               <Playlist key={i}>
+
                 <PlaylistCover to={id}>
                   {images.length ? (
-                    <PlaylistImage src={images[0].url} alt="Album Art" />
+                    <PlaylistImage src={images[0].url} alt="Album Cover" />
                   ) : (
                     <PlaceholderArtwork>
                       <PlaceholderContent>
@@ -130,6 +132,7 @@ const Playlists = () => {
                     <i className="fas fa-info-circle" />
                   </PlaylistMask>
                 </PlaylistCover>
+
                 <div>
                   <PlaylistName to={id}>{name}</PlaylistName>
                   <TotalTracks>{tracks.total} Tracks</TotalTracks>
