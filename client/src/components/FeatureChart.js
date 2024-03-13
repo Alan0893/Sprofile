@@ -96,32 +96,7 @@ const FeatureChart = props => {
           },
           legend: {
             display: false,
-          },
-          scales: {
-            xAxes: [
-              {
-                gridLines: {
-                  color: 'rgba(255, 255, 255, 0.3)',
-                },
-                ticks: {
-                  fontFamily: `${fonts.primary}`,
-                  fontSize: 12,
-                },
-              },
-            ],
-            yAxes: [
-              {
-                gridLines: {
-                  color: 'rgba(255, 255, 255, 0.3)',
-                },
-                ticks: {
-                  beginAtZero: true,
-                  fontFamily: `${fonts.primary}`,
-                  fontSize: 12,
-                },
-              },
-            ],
-          },
+          }
         },
       });
     };

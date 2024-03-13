@@ -126,7 +126,7 @@ const Playlist = props => {
               <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>
 
               {audioFeatures && (
-                <FeatureChart features={audioFeatures.audio_features} type="horizontalBar" />
+                <FeatureChart features={audioFeatures.audio_features} type="bar" />
               )}
             </Left>
             <Right>
