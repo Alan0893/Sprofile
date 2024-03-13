@@ -11,7 +11,7 @@ const headers = {
  * Get an Artist
  * https://developer.spotify.com/documentation/web-api/reference/get-an-artist
  */
-export const getArtist = artistId =>
+export const getArtist = (artistId) =>
   axios.get(`https://api.spotify.com/v1/artists/${artistId}`, { 
 		headers 
 	});
