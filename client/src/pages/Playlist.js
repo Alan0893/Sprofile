@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import { getPlaylist } from '../api/playlist';
 import { getAudioFeaturesForTracks } from '../api/tracks';
-import { catchErrors } from '../utils';
+import { catchErrors, getPlaylistDuration } from '../utils';
 
 import Loader from '../components/Loader';
 import TrackItem from '../components/TrackItem';
@@ -44,6 +45,12 @@ const PlaylistCover = styled.div`
     display: none;
   `};
 `;
+const Links = styled.a`
+  &:hover,
+  &:focus {
+    color: ${colors.offBlue};
+  }
+`;
 const Name = styled.h3`
   font-weight: 700;
   font-size: ${fontSizes.xl};
@@ -62,8 +69,23 @@ const Description = styled.p`
   }
 `;
 const RecButton = styled(Link)`
-  ${mixins.defaultButton};
+  background-color: transparent;
+  color: ${colors.white};
+  border: 1px solid ${colors.white};
+  border-radius: 30px;
+  margin-top: 30px;
   margin-bottom: ${spacing.lg};
+  padding: 12px 30px;
+  font-size: ${fontSizes.xs};
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  &:hover,
+  &:focus {
+    background-color: ${colors.white};
+    color: ${colors.black};
+  }
 `;
 const Owner = styled.p`
   font-size: ${fontSizes.sm};
@@ -85,6 +107,7 @@ const Playlist = props => {
     const fetchData = async () => {
       const { data } = await getPlaylist(playlistId);
       setPlaylist(data);
+      console.log(data)
     };
     catchErrors(fetchData());
   }, [playlistId]);
@@ -100,47 +123,51 @@ const Playlist = props => {
   }, [playlist]);
 
   return (
-    <React.Fragment>
+    <>
       {playlist ? (
         <Main>
           <PlaylistContainer>
             <Left>
               {playlist.images.length && (
                 <PlaylistCover>
-                  <img src={playlist.images[0].url} alt="Album Art" />
+                  <img src={playlist.images[0].url} alt="Album Cover" />
                 </PlaylistCover>
               )}
 
-              <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+              <Links href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
                 <Name>{playlist.name}</Name>
-              </a>
+              </Links>
 
-              <Owner>By {playlist.owner.display_name}</Owner>
+              <Owner>By&nbsp;
+                <Links href={playlist.owner.external_urls.spotify}>{playlist.owner.display_name}</Links>
+              </Owner>
 
               {playlist.description && (
                 <Description dangerouslySetInnerHTML={{ __html: playlist.description }} />
               )}
 
-              <TotalTracks>{playlist.tracks.total} Tracks</TotalTracks>
+              <TotalTracks>{playlist.tracks.total} Tracks ({getPlaylistDuration(playlist)})</TotalTracks>
 
               <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>
 
               {audioFeatures && (
-                <FeatureChart features={audioFeatures.audio_features} type="bar" />
+                <FeatureChart features={audioFeatures.audio_features} type="doughnut" />
               )}
             </Left>
+
             <Right>
               <ul>
                 {playlist.tracks &&
                   playlist.tracks.items.map(({ track }, i) => <TrackItem track={track} key={i} />)}
               </ul>
             </Right>
+
           </PlaylistContainer>
         </Main>
       ) : (
         <Loader />
       )}
-    </React.Fragment>
+    </>
   );
 };
 
