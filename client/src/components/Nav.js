@@ -60,25 +60,6 @@ const Logo = styled.div`
     width: 50px;
   }
 `;
-const Github = styled.div`
-  color: ${colors.lightGrey};
-  width: 45px;
-  height: 45px;
-  margin-bottom: 30px;
-  ${media.tablet`
-    display: none;
-  `};
-  a {
-    &:hover,
-    &:focus,
-    &.active {
-      color: ${colors.blue};
-    }
-    svg {
-      width: 30px;
-    }
-  }
-`;
 const Menu = styled.ul`
   display: flex;
   flex-direction: column;
@@ -171,14 +152,9 @@ const Nav = () => (
         </NavLink>
       </MenuItem>
     </Menu>
-    <Github>
-      <a
-        href="https://github.com/bchiang7/spotify-profile"
-        target="_blank"
-        rel="noopener noreferrer">
-        <IconGithub />
-      </a>
-    </Github>
+    <div>
+
+    </div>
   </Container>
 );
 
