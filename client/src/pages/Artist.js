@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { formatWithCommas, catchErrors } from '../utils';
@@ -30,7 +30,13 @@ const Artwork = styled.div`
     `};
   }
 `;
-const ArtistName = styled.h1`
+const ArtistName = styled.a`
+  &:hover,
+  &:focus {
+    color: ${colors.offBlue};
+  }
+`;
+const Name = styled.h1`
   font-size: 70px;
   margin-top: ${spacing.md};
   ${media.tablet`
@@ -44,7 +50,8 @@ const Stats = styled.div`
   margin-top: ${spacing.md};
   text-align: center;
 `;
-const Stat = styled.div``;
+const Stat = styled.div`
+`;
 const Number = styled.div`
   color: ${colors.blue};
   font-weight: 700;
@@ -73,28 +80,34 @@ const Artist = props => {
     const fetchData = async () => {
       const { data } = await getArtist(artistId);
       setArtist(data);
+      console.log(data)
     };
     catchErrors(fetchData());
   }, [artistId]);
 
   return (
-    <React.Fragment>
-      {artist ? (
+    <>
+      { artist ? (
         <ArtistContainer>
           <Artwork>
-            <img src={artist.images[0].url} alt="Artist Artwork" />
+            <img src={artist.images[0].url} alt="Artist Image" />
           </Artwork>
+
           <div>
-            <ArtistName>{artist.name}</ArtistName>
+            <ArtistName href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+              <Name>{artist.name}</Name>
+            </ArtistName>
+
             <Stats>
               <Stat>
                 <Number>{formatWithCommas(artist.followers.total)}</Number>
                 <NumLabel>Followers</NumLabel>
               </Stat>
+
               {artist.genres && (
                 <Stat>
                   <Number>
-                    {artist.genres.map(genre => (
+                    { artist.genres.map(genre => (
                       <Genre key={genre}>{genre}</Genre>
                     ))}
                   </Number>
@@ -103,17 +116,18 @@ const Artist = props => {
               )}
               {artist.popularity && (
                 <Stat>
-                  <Number>{artist.popularity}%</Number>
+                  <Number>{ artist.popularity }%</Number>
                   <NumLabel>Popularity</NumLabel>
                 </Stat>
               )}
             </Stats>
           </div>
+
         </ArtistContainer>
       ) : (
         <Loader />
-      )}
-    </React.Fragment>
+      ) }
+    </>
   );
 };
 
