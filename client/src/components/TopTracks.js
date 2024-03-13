@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../api';
+import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../api/user';
 import { catchErrors } from '../utils';
 
 import Loader from './Loader';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { formatDuration, getYear, parsePitchClass, catchErrors } from '../utils';
-import { getTrackInfo } from '../api';
+import { getTrackInfo } from '../api/tracks';
 
 import Loader from './Loader';
 import FeatureChart from './FeatureChart';

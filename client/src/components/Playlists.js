@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getPlaylists } from '../api';
+import { getPlaylists } from '../api/playlist';
 import { catchErrors } from '../utils';
 
 import Loader from './Loader';

@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {
+import { 
   getPlaylist,
-  getRecommendationsForTracks,
-  getUser,
   createPlaylist,
-  addTracksToPlaylist,
+  addTracksToPlaylist
+} from '../api/playlist';
+import { 
+  getUser,
   followPlaylist,
-  doesUserFollowPlaylist,
-} from '../api';
+  doesUserFollowPlaylist
+} from '../api/user';
+import {
+  getRecommendationsForTracks
+} from '../api/tracks';
+
 import { catchErrors } from '../utils';
 
 import TrackItem from './TrackItem';

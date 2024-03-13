@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../api';
+import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../api/user';
 import { catchErrors } from '../utils';
 
 import { IconInfo } from './icons';

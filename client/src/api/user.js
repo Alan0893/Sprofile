@@ -1,5 +1,6 @@
 import { token } from "./index";
 import axios from "axios";
+import { getPlaylists } from "./playlist";
 
 // API CALLS ***************************************************************************************
 const headers = {

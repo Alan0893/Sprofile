@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserInfo, logout } from '../api';
+import { logout } from '../api';
+import { getUserInfo } from '../api/user';
 import { catchErrors } from '../utils';
 
 import { IconUser, IconInfo } from './icons';

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import { formatWithCommas, catchErrors } from '../utils';
-import { getArtist } from '../api';
+import { getArtist } from '../api/artists';
 
 import Loader from './Loader';
 

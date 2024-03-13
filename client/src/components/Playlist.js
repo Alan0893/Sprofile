@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getPlaylist, getAudioFeaturesForTracks } from '../api';
+import { getPlaylist } from '../api/playlist';
+import { getAudioFeaturesForTracks } from '../api/tracks';
 import { catchErrors } from '../utils';
 
 import Loader from './Loader';
