@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 
 import ScrollToTop from './ScrollToTop';
 import Nav from './Nav';
@@ -33,12 +33,29 @@ const Profile = () => (
 				<Route path="/artists" element={<TopArtists/>} />
 				<Route path="/tracks" element={<TopTracks/>} />
 				<Route path="/playlists" element={<Playlists/>} />
-				<Route path="/playlist/:id" element={<Playlist/>} />
-				<Route path="/recommendations/:id" element={<Recommendations/>} />
-				<Route path="/track/:id" element={<Track/>} />
-				<Route path="/artist/:id" element={<Artist/>} />
+				<Route path="/playlist/:id" element={<PlaylistId/>} />
+				<Route path="/recommendations/:id" element={<RecommendationsId/>} />
+				<Route path="/track/:id" element={<TrackId/>} />
+				<Route path="/artist/:id" element={<ArtistId/>} />
 			</Routes>
 	</SiteWrapper>
-)
+);
+
+const PlaylistId = () => {
+	const { id } = useParams();
+	return <Playlist playlistId={id} />;
+}
+const RecommendationsId = () => {
+	const { id } = useParams();
+	return <Recommendations playlistId={id} />;
+}
+const TrackId = () => {
+	const { id } = useParams();
+	return <Track trackId={id} />;
+}
+const ArtistId = () => {
+	const { id } = useParams();
+	return <Artist artistId={id} />;
+}
 
 export default Profile;
