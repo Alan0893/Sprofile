@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { formatDuration } from '../utils';
 
+import { formatDuration } from '../utils';
 import { IconInfo } from '../assets/icons';
 
 import styled from 'styled-components';
