@@ -5,17 +5,17 @@ import { getHashParams } from '../utils';
 const EXPIRATION_TIME = 3600 * 1000;	// 1 hour
 
 // Setting tokens to local storage
-const setTokenTimestamp = () => window.localStorage.setItem('spotify_token_timestamp', Date.now());
+const setTokenTimestamp = () => window.localStorage.setItem('token_timestamp', Date.now());
 const setLocalAccessToken = (token) => {
   setTokenTimestamp();
-  window.localStorage.setItem('spotify_access_token', token);
+  window.localStorage.setItem('access_token', token);
 };
-const setLocalRefreshToken = (token) => window.localStorage.setItem('spotify_refresh_token', token);
+const setLocalRefreshToken = (token) => window.localStorage.setItem('refresh_token', token);
 
 // Getting tokens from local storage
-const getTokenTimestamp = () => window.localStorage.getItem('spotify_token_timestamp');
-const getLocalAccessToken = () => window.localStorage.getItem('spotify_access_token');
-const getLocalRefreshToken = () => window.localStorage.getItem('spotify_refresh_token');
+const getTokenTimestamp = () => window.localStorage.getItem('token_timestamp');
+const getLocalAccessToken = () => window.localStorage.getItem('access_token');
+const getLocalRefreshToken = () => window.localStorage.getItem('refresh_token');
 
 // Refresh the token
 const refreshAccessToken = async () => {
@@ -59,8 +59,8 @@ export const getAccessToken = () => {
 export const token = getAccessToken();
 
 export const logout = () => {
-  window.localStorage.removeItem('spotify_token_timestamp');
-  window.localStorage.removeItem('spotify_access_token');
-  window.localStorage.removeItem('spotify_refresh_token');
+  window.localStorage.removeItem('token_timestamp');
+  window.localStorage.removeItem('access_token');
+  window.localStorage.removeItem('refresh_token');
   window.location.reload();
 };
