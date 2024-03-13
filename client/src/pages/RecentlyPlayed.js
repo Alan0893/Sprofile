@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getRecentlyPlayed } from '../api/player';
 import { catchErrors } from '../utils';
 
