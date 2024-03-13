@@ -10,6 +10,23 @@ export const getHashParams = () => {
   return hashParams;
 };
 
+// Get duration of the Playlist 
+export const getPlaylistDuration = (playlist) => {
+  const totalDurationMs = playlist.tracks.items.reduce((total, { track }) => total + track.duration_ms, 0);
+  const totalDurationMinutes = totalDurationMs / 60000;
+  const hours = Math.floor(totalDurationMinutes / 60); 
+  const minutes = Math.floor(totalDurationMinutes % 60);
+  const seconds = Math.floor((totalDurationMinutes * 60) % 60);
+  
+  let durationString = "";
+  if (hours > 0) { durationString += `${hours}h `; }
+  if (minutes > 0) { durationString += `${minutes}m `; }
+  if (seconds > 0) { durationString += `${seconds}s`; }
+  
+  return durationString.trim();
+};
+
+
 // Format milliseconds into MM:SS
 export const formatDuration = millis => {
   const minutes = Math.floor(millis / 60000);
