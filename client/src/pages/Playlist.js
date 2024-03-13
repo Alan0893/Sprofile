@@ -107,7 +107,6 @@ const Playlist = props => {
     const fetchData = async () => {
       const { data } = await getPlaylist(playlistId);
       setPlaylist(data);
-      console.log(data)
     };
     catchErrors(fetchData());
   }, [playlistId]);
