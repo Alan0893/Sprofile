@@ -1,6 +1,5 @@
 import { Route, Routes, useParams } from 'react-router-dom';
 
-import ScrollToTop from '../components/ScrollToTop';
 import Nav from '../components/Nav';
 import User from '../components/User';
 import RecentlyPlayed from './RecentlyPlayed';
@@ -26,7 +25,6 @@ const SiteWrapper = styled.div`
 const Profile = () => (
 	<SiteWrapper>
 		<Nav/>
-			<ScrollToTop/>
 			<Routes>
 				<Route exact path="/" element={<User/>} />
 				<Route path="/recent" element={<RecentlyPlayed/>} />
