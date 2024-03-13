@@ -5,6 +5,14 @@ const { colors, fontSizes } = theme;
 
 const LOGIN_URI = 'http://localhost:3000/login';
 
+const LoginContainer = styled.div`
+  height: 100%;
+  min-height: 100vh;
+  background-color: #212121;
+  background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7a2d3816-66fc-444a-b22a-81f3a67838af/deo182h-4d8f64bf-0b0c-4f9b-8d13-a57c8d144ce1.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzdhMmQzODE2LTY2ZmMtNDQ0YS1iMjJhLTgxZjNhNjc4MzhhZlwvZGVvMTgyaC00ZDhmNjRiZi0wYjBjLTRmOWItOGQxMy1hNTdjOGQxNDRjZTEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.kplGovV3iIhR_A57G9pi3PocT73O4TNsf07CUHPoPAk');
+  background-size: cover; 
+  background-repeat: no-repeat;
+`;
 const Login = styled(Main)`
   ${mixins.flexCenter};
   flex-direction: column;
@@ -32,10 +40,12 @@ const LoginButton = styled.a`
 `;
 
 const LoginScreen = () => (
-  <Login>
-    <h1>Spotify Profile</h1>
-    <LoginButton href={LOGIN_URI}>Log in to Spotify</LoginButton>
-  </Login>
+  <LoginContainer>
+    <Login>
+      <h1>Spotify Profile</h1>
+      <LoginButton href={LOGIN_URI}>Log in to Spotify</LoginButton>
+    </Login>
+  </LoginContainer>
 );
 
 export default LoginScreen;
