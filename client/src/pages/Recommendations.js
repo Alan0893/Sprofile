@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import { 
   getPlaylist,
   createPlaylist,
@@ -21,7 +22,7 @@ import TrackItem from '../components/TrackItem';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';
-const { colors } = theme;
+const { colors, fontSizes, spacing } = theme;
 
 const PlaylistHeading = styled.div`
   ${mixins.flexBetween};
@@ -34,10 +35,42 @@ const PlaylistHeading = styled.div`
   }
 `;
 const SaveButton = styled.button`
-  ${mixins.defaultButton};
+  background-color: transparent;
+  color: ${colors.blue};
+  border: 1px solid ${colors.blue};
+  border-radius: 30px;
+  margin-top: 30px;
+  margin-bottom: ${spacing.lg};
+  padding: 12px 30px;
+  font-size: ${fontSizes.xs};
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  &:hover,
+  &:focus {
+    background-color: ${colors.blue};
+    color: ${colors.black};
+  }
 `;
 const OpenButton = styled.a`
-  ${mixins.button};
+  background-color: transparent;
+  color: ${colors.blue};
+  border: 1px solid ${colors.blue};
+  border-radius: 30px;
+  margin-top: 30px;
+  margin-bottom: ${spacing.lg};
+  padding: 12px 30px;
+  font-size: ${fontSizes.xs};
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  &:hover,
+  &:focus {
+    background-color: ${colors.blue};
+    color: ${colors.black};
+  }
 `;
 const TracksContainer = styled.ul`
   margin-top: 50px;
