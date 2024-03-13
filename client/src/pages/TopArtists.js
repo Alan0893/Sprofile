@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../api/user';
 import { catchErrors } from '../utils';
 
