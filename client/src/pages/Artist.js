@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { formatWithCommas, catchErrors } from '../utils';
 import { getArtist } from '../api/artists';
 
-import Loader from './Loader';
+import Loader from '../components/Loader';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';

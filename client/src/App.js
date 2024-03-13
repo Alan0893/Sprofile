@@ -3,8 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { token } from './api';
 
-import LoginScreen from './components/LoginScreen';
-import Profile from './components/Profile';
+import LoginScreen from './pages/LoginScreen';
+import Profile from './pages/Profile';
 
 import styled from 'styled-components';
 import { GlobalStyle } from './styles';

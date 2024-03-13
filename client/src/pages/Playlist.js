@@ -5,9 +5,9 @@ import { getPlaylist } from '../api/playlist';
 import { getAudioFeaturesForTracks } from '../api/tracks';
 import { catchErrors } from '../utils';
 
-import Loader from './Loader';
-import TrackItem from './TrackItem';
-import FeatureChart from './FeatureChart';
+import Loader from '../components/Loader';
+import TrackItem from '../components/TrackItem';
+import FeatureChart from '../components/FeatureChart';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';

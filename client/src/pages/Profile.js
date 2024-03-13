@@ -1,8 +1,8 @@
 import { Route, Routes, useParams } from 'react-router-dom';
 
-import ScrollToTop from './ScrollToTop';
-import Nav from './Nav';
-import User from './User';
+import ScrollToTop from '../components/ScrollToTop';
+import Nav from '../components/Nav';
+import User from '../components/User';
 import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';

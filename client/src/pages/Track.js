@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { formatDuration, getYear, parsePitchClass, catchErrors } from '../utils';
 import { getTrackInfo } from '../api/tracks';
 
-import Loader from './Loader';
-import FeatureChart from './FeatureChart';
+import Loader from '../components/Loader';
+import FeatureChart from '../components/FeatureChart';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';

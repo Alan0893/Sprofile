@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getPlaylists } from '../api/playlist';
 import { catchErrors } from '../utils';
 
-import Loader from './Loader';
+import Loader from '../components/Loader';
 import { IconMusic } from '../assets/icons';
 
 import styled from 'styled-components';

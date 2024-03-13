@@ -4,7 +4,7 @@ import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../a
 import { catchErrors } from '../utils';
 
 import { IconInfo } from '../assets/icons';
-import Loader from './Loader';
+import Loader from '../components/Loader';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';

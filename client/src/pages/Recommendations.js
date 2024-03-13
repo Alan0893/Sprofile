@@ -17,7 +17,7 @@ import {
 
 import { catchErrors } from '../utils';
 
-import TrackItem from './TrackItem';
+import TrackItem from '../components/TrackItem';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';

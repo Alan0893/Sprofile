@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { getRecentlyPlayed } from '../api/player';
 import { catchErrors } from '../utils';
 
-import Loader from './Loader';
-import TrackItem from './TrackItem';
+import Loader from '../components/Loader';
+import TrackItem from '../components/TrackItem';
 
 import styled from 'styled-components';
 import { Main } from '../styles';
