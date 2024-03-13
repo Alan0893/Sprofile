@@ -33,7 +33,7 @@ const Profile = () => (
 				<Route path="/artists" element={<TopArtists/>} />
 				<Route path="/tracks" element={<TopTracks/>} />
 				<Route path="/playlists" element={<Playlists/>} />
-				<Route path="/playlist/:id" element={<PlaylistId/>} />
+				<Route path="/playlists/:id" element={<PlaylistId/>} />
 				<Route path="/recommendations/:id" element={<RecommendationsId/>} />
 				<Route path="/track/:id" element={<TrackId/>} />
 				<Route path="/artist/:id" element={<ArtistId/>} />

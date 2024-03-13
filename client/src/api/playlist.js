@@ -43,7 +43,7 @@ export const addTracksToPlaylist = (playlistId, uris) => {
  * Get a Playlist
  * https://developer.spotify.com/documentation/web-api/reference/get-playlist/
  */
-export const getPlaylist = playlistId =>
+export const getPlaylist = (playlistId) =>
   axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, { 
 		headers 
 	});
@@ -53,7 +53,9 @@ export const getPlaylist = playlistId =>
  * Get a Playlist's Tracks
  * https://developer.spotify.com/documentation/web-api/reference/get-playlists-tracks/
  */
-export const getPlaylistTracks = playlistId =>
-  axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { headers });
+export const getPlaylistTracks = (playlistId) =>
+  axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { 
+    headers 
+  });
 
 
