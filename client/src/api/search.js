@@ -17,7 +17,7 @@ export const search = (query, type) => {
 	if (!valid.includes(type)) {
 		throw new Error('Invalid type');
 	}
-	axios.get(`https://api.spotify.com/v1/search?q=${query}&type=${type}`, { 
+	return axios.get(`https://api.spotify.com/v1/search?q=${query}&type=${type}`, { 
 		headers 
 	});
 }
