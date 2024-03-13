@@ -4,7 +4,7 @@ import { getPlaylists } from '../api/playlist';
 import { catchErrors } from '../utils';
 
 import Loader from './Loader';
-import { IconMusic } from './icons';
+import { IconMusic } from '../assets/icons';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';

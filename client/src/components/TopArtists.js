@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../api/user';
 import { catchErrors } from '../utils';
 
-import { IconInfo } from './icons';
+import { IconInfo } from '../assets/icons';
 import Loader from './Loader';
 
 import styled from 'styled-components';

@@ -9,7 +9,7 @@ import {
   IconPlaylist,
   IconMusic,
   IconGithub,
-} from './icons';
+} from '../assets/icons';
 
 import styled from 'styled-components';
 import { theme, mixins, media } from '../styles';

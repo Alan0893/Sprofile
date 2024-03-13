@@ -4,7 +4,7 @@ import { logout } from '../api';
 import { getUserInfo } from '../api/user';
 import { catchErrors } from '../utils';
 
-import { IconUser, IconInfo } from './icons';
+import { IconUser, IconInfo } from '../assets/icons';
 import Loader from './Loader';
 import TrackItem from './TrackItem';
 

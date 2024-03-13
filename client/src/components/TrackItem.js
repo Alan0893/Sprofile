@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { formatDuration } from '../utils';
 
-import { IconInfo } from './icons';
+import { IconInfo } from '../assets/icons';
 
 import styled from 'styled-components';
 import { theme, mixins, media } from '../styles';
