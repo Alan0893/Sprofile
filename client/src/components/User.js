@@ -205,7 +205,7 @@ const User = () => {
           <Header>
             <Avatar>
               {user.images.length > 0 ? (
-                <img src={user.images[0].url} alt="avatar" />
+                <img src={user.images[1].url} alt="avatar" />
               ) : (
                 <NoAvatar>
                   <IconUser />
