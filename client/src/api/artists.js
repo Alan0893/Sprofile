@@ -29,7 +29,7 @@ export const getSeveralArtists = (ids) =>
 //*********************************************************************************************************************************
 /**
  * Get Artist's Albums
- * https://developer.spotify.com/documentation/web-api/reference/get-artists-albums
+ * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-albums
  */
 export const getArtistsAlbums = (artistId) =>
   axios.get(`https://api.spotify.com/v1/artists/${artistId}/albums`, { 
@@ -39,10 +39,10 @@ export const getArtistsAlbums = (artistId) =>
 //*********************************************************************************************************************************
 /**
  * Get Artist's Top Tracks
- * https://developer.spotify.com/documentation/web-api/reference/get-artists-top-tracks
+ * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-top-tracks
  */
 export const getArtistsTopTracks = (artistId) =>
-  axios.get(`https://api.spotify.com/v1/artists/${artistId}/top-trackS`, { 
+  axios.get(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, { 
     headers 
   });
 
