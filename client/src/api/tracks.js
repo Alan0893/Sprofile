@@ -10,7 +10,14 @@ const headers = {
 /**
  * Return a comma separated string of track IDs from the given array of tracks
  */
-const getTrackIds = (tracks) => tracks.map(({ track }) => track.id).join(',');
+const getTrackIds = (tracks) => {
+	try {
+			return tracks.map(({ track }) => track.id).join(',');
+	} catch (error) {
+			return tracks.map((track) => track.id).join(',');
+	}
+}
+
 
 //*********************************************************************************************************************************
 /**
