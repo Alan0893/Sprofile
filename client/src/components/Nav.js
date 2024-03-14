@@ -152,9 +152,6 @@ const Nav = () => (
         </NavLink>
       </MenuItem>
     </Menu>
-    <div>
-
-    </div>
   </Container>
 );
 
