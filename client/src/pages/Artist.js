@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { formatWithCommas, catchErrors } from '../utils';
-import { getArtist } from '../api/artists';
+import { getArtist, getArtistsAlbums } from '../api/artists';
+import { IconMusic } from '../assets/icons';
 
 import Loader from '../components/Loader';
 
@@ -72,9 +74,100 @@ const NumLabel = styled.p`
   margin-top: ${spacing.xs};
 `;
 
+
+const Wrapper = styled.div`
+  ${mixins.flexBetween};
+  align-items: flex-start;
+  margin-left: ${spacing.lg};
+  margin-right: ${spacing.lg};
+`;
+const AlbumContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+  grid-gap: ${spacing.md};
+  width: 100%;
+  margin-top: 50px;
+  ${media.tablet`
+    grid-template-columns: repeat(auto-fit, minmax(150px, 2fr));
+  `};
+  ${media.phablet`
+    grid-template-columns: repeat(auto-fit, minmax(120px, 2fr));
+  `};
+`;
+const Album = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`;
+const AlbumMask = styled.div`
+  ${mixins.flexCenter};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 30px;
+  color: ${colors.white};
+  opacity: 0;
+  transition: ${theme.transition};
+`;
+const AlbumImage = styled.img`
+  object-fit: cover;
+`;
+const AlbumCover = styled(Link)`
+  ${mixins.coverShadow};
+  position: relative;
+  width: 100%;
+  margin-bottom: ${spacing.base};
+  &:hover,
+  &:focus {
+    ${AlbumMask} {
+      opacity: 1;
+    }
+  }
+`;
+const PlaceholderArtwork = styled.div`
+  ${mixins.flexCenter};
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  background-color: ${colors.darkGrey};
+  svg {
+    width: 50px;
+    height: 50px;
+  }
+`;
+const PlaceholderContent = styled.div`
+  ${mixins.flexCenter};
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
+const AlbumName = styled(Link)`
+  display: inline;
+  border-bottom: 1px solid transparent;
+  &:hover,
+  &:focus {
+    border-bottom: 1px solid ${colors.white};
+  }
+`;
+const TotalTracks = styled.div`
+  text-transform: uppercase;
+  margin: 5px 0;
+  color: ${colors.lightGrey};
+  font-size: ${fontSizes.xs};
+  letter-spacing: 1px;
+`;
+
 const Artist = props => {
   const { artistId } = props;
   const [artist, setArtist] = useState(null);
+  const [albums, setAlbums] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,45 +177,87 @@ const Artist = props => {
     catchErrors(fetchData());
   }, [artistId]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await getArtistsAlbums(artistId);
+      setAlbums(data);
+    };
+    catchErrors(fetchData());
+  }, [artistId]);
+
   return (
     <>
       { artist ? (
-        <ArtistContainer>
-          <Artwork>
-            <img src={artist.images[0].url} alt="Artist Image" />
-          </Artwork>
+        <>
+          <ArtistContainer>
+            <Artwork>
+              <img src={artist.images[0].url} alt="Artist Image" />
+            </Artwork>
 
-          <div>
-            <ArtistName href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-              <Name>{artist.name}</Name>
-            </ArtistName>
+            <div>
+              <ArtistName href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                <Name>{artist.name}</Name>
+              </ArtistName>
 
-            <Stats>
-              <Stat>
-                <Number>{formatWithCommas(artist.followers.total)}</Number>
-                <NumLabel>Followers</NumLabel>
-              </Stat>
-
-              {artist.genres && (
+              <Stats>
                 <Stat>
-                  <Number>
-                    { artist.genres.map(genre => (
-                      <Genre key={genre}>{genre}</Genre>
-                    ))}
-                  </Number>
-                  <NumLabel>Genres</NumLabel>
+                  <Number>{formatWithCommas(artist.followers.total)}</Number>
+                  <NumLabel>Followers</NumLabel>
                 </Stat>
-              )}
-              {artist.popularity && (
-                <Stat>
-                  <Number>{ artist.popularity }%</Number>
-                  <NumLabel>Popularity</NumLabel>
-                </Stat>
-              )}
-            </Stats>
-          </div>
 
-        </ArtistContainer>
+                {artist.genres && (
+                  <Stat>
+                    <Number>
+                      { artist.genres.map(genre => (
+                        <Genre key={genre}>{genre}</Genre>
+                      ))}
+                    </Number>
+                    <NumLabel>Genres</NumLabel>
+                  </Stat>
+                )}
+                {artist.popularity && (
+                  <Stat>
+                    <Number>{ artist.popularity }%</Number>
+                    <NumLabel>Popularity</NumLabel>
+                  </Stat>
+                )}
+              </Stats>
+            </div>
+          </ArtistContainer>
+          <Wrapper>
+            <AlbumContainer>
+              {albums ? (
+                albums.items.map(({ id, images, name, total_tracks }, i) => (
+                  <Album key={i}>
+
+                    <AlbumCover to={`/album/${id}`}>
+                      {images.length ? (
+                        <AlbumImage src={images[0].url} alt="Album Cover" />
+                      ) : (
+                        <PlaceholderArtwork>
+                          <PlaceholderContent>
+                            <IconMusic />
+                          </PlaceholderContent>
+                        </PlaceholderArtwork>
+                      )}
+                      <AlbumMask>
+                        <i className="fas fa-info-circle" />
+                      </AlbumMask>
+                    </AlbumCover>
+
+                    <div>
+                      <AlbumName to={`/album/${id}`}>{name}</AlbumName>
+                      <TotalTracks>{total_tracks} Tracks</TotalTracks>
+                    </div>
+                  </Album>
+                ))
+              ) : (
+                <Loader />
+              )}
+              
+            </AlbumContainer>
+          </Wrapper>
+        </>
       ) : (
         <Loader />
       ) }

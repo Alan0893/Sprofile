@@ -2,6 +2,7 @@ import { Route, Routes, useParams } from 'react-router-dom';
 
 import Nav from '../components/Nav';
 import User from '../components/User';
+
 import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
@@ -10,6 +11,7 @@ import Playlist from './Playlist';
 import Recommendations from './Recommendations';
 import Track from './Track';
 import Artist from './Artist';
+import Album from './Album';
 
 import styled from 'styled-components';
 import { theme, media } from '../styles';
@@ -35,6 +37,7 @@ const Profile = () => (
 				<Route path="/recommendations/:id" element={<RecommendationsId/>} />
 				<Route path="/track/:id" element={<TrackId/>} />
 				<Route path="/artist/:id" element={<ArtistId/>} />
+				<Route path="/album/:id" element={<AlbumId/>} />
 			</Routes>
 	</SiteWrapper>
 );
@@ -54,6 +57,10 @@ const TrackId = () => {
 const ArtistId = () => {
 	const { id } = useParams();
 	return <Artist artistId={id} />;
+}
+const AlbumId = () => {
+	const { id } = useParams();
+	return <Album albumId={id} />;
 }
 
 export default Profile;
