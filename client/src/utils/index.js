@@ -125,3 +125,14 @@ export const catchErrors = fn =>
       console.error(err);
     });
   };
+
+
+export const findImageWithRatio = (images) => {
+  for (const image of images) {
+    if (image.ratio === '4_3') {
+      return image.url;
+    }
+  }
+  return images[0].url;
+}
+  

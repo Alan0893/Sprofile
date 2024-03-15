@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { formatWithCommas, catchErrors, formatDate } from '../utils';
+import { formatWithCommas, catchErrors, formatDate, findImageWithRatio } from '../utils';
 import { getArtist, getArtistsAlbums } from '../api/artists';
+import { getEvents } from '../api/ticketmaster';
 import { IconMusic } from '../assets/icons';
 
 import Loader from '../components/Loader';
@@ -17,6 +18,7 @@ const ArtistContainer = styled(Main)`
   flex-direction: column;
   height: 100%;
   text-align: center;
+  margin-bottom: -${spacing.xl};
 `;
 const Artwork = styled.div`
   ${mixins.coverShadow};
@@ -75,6 +77,7 @@ const NumLabel = styled.p`
 `;
 const Subtitle = styled.h2`
   text-align: center;
+  margin-top: ${spacing.xl};
 `;
 
 
@@ -84,7 +87,7 @@ const Wrapper = styled.div`
   margin-left: ${spacing.lg};
   margin-right: ${spacing.lg};
 `;
-const AlbumContainer = styled.div`
+const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
   grid-gap: ${spacing.md};
@@ -97,12 +100,14 @@ const AlbumContainer = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(120px, 2fr));
   `};
 `;
-const Album = styled.div`
+const Item = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  width: ${props => props.isSingleImage ? '25%' : 'auto'};
+  height: ${props => props.isSingleImage ? '25%' : 'auto'};
 `;
-const AlbumMask = styled.div`
+const ItemMask = styled.div`
   ${mixins.flexCenter};
   position: absolute;
   width: 100%;
@@ -117,7 +122,7 @@ const AlbumMask = styled.div`
   opacity: 0;
   transition: ${theme.transition};
 `;
-const AlbumImage = styled.img`
+const ItemImage = styled.img`
   object-fit: cover;
 `;
 const AlbumCover = styled(Link)`
@@ -127,7 +132,19 @@ const AlbumCover = styled(Link)`
   margin-bottom: ${spacing.base};
   &:hover,
   &:focus {
-    ${AlbumMask} {
+    ${ItemMask} {
+      opacity: 1;
+    }
+  }
+`;
+const ItemCover = styled.a`
+  ${mixins.coverShadow};
+  position: relative;
+  width: 100%;
+  margin-bottom: ${spacing.base};
+  &:hover,
+  &:focus {
+    ${ItemMask} {
       opacity: 1;
     }
   }
@@ -151,7 +168,7 @@ const PlaceholderContent = styled.div`
   left: 0;
   right: 0;
 `;
-const AlbumName = styled(Link)`
+const ArtName = styled(Link)`
   display: inline;
   border-bottom: 1px solid transparent;
   &:hover,
@@ -159,14 +176,15 @@ const AlbumName = styled(Link)`
     border-bottom: 1px solid ${colors.white};
   }
 `;
-const TotalTracks = styled.div`
-  text-transform: uppercase;
-  margin: 5px 0;
-  color: ${colors.lightGrey};
-  font-size: ${fontSizes.xs};
-  letter-spacing: 1px;
+const ItemName = styled.a`
+  display: inline;
+    border-bottom: 1px solid transparent;
+    &:hover,
+    &:focus {
+      border-bottom: 1px solid ${colors.white};
+    }
 `;
-const ReleasedDate = styled.div`
+const Details = styled.div`
   text-transform: uppercase;
   margin: 5px 0;
   color: ${colors.lightGrey};
@@ -178,11 +196,16 @@ const Artist = props => {
   const { artistId } = props;
   const [artist, setArtist] = useState(null);
   const [albums, setAlbums] = useState(null);
+  const [events, setEvents] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await getArtist(artistId);
       setArtist(data);
+
+      const res =  await getEvents(data.name);
+      setEvents(res.data._embedded.events);
+      console.log(res.data._embedded.events)
     };
     catchErrors(fetchData());
   }, [artistId]);
@@ -239,14 +262,14 @@ const Artist = props => {
             <>
               <Subtitle>Albums</Subtitle>
               <Wrapper>
-                <AlbumContainer>
+                <Container>
                   {albums ? (
                     albums.items.map(({ id, images, name, total_tracks, release_date }, i) => (
-                      <Album key={i}>
+                      <Item key={i}>
 
                         <AlbumCover to={`/album/${id}`}>
                           {images.length ? (
-                            <AlbumImage src={images[0].url} alt="Album Cover" />
+                            <ItemImage src={images[0].url} alt="Album Cover" />
                           ) : (
                             <PlaceholderArtwork>
                               <PlaceholderContent>
@@ -254,26 +277,65 @@ const Artist = props => {
                               </PlaceholderContent>
                             </PlaceholderArtwork>
                           )}
-                          <AlbumMask>
+                          <ItemMask>
                             <i className="fas fa-info-circle" />
-                          </AlbumMask>
+                          </ItemMask>
                         </AlbumCover>
 
                         <div>
-                          <AlbumName to={`/album/${id}`}>{name}</AlbumName>
-                          <TotalTracks>{total_tracks} Tracks</TotalTracks>
-                          <ReleasedDate>{formatDate(release_date)}</ReleasedDate>
+                          <ArtName to={`/album/${id}`}>{name}</ArtName>
+                          <Details>{total_tracks} Tracks</Details>
+                          <Details>{formatDate(release_date)}</Details>
                         </div>
-                      </Album>
+                      </Item>
                     ))
                   ) : (
                     <Loader />
                   )}
                   
-                </AlbumContainer>
+                </Container>
               </Wrapper>
             </>
           ) : () => (
+            <></>
+          )}
+
+{ events ? (
+            <>
+              <Subtitle>Events</Subtitle>
+              <Wrapper>
+                <Container>
+                  {
+                    events.map(({ images, dates, name, url }, i) => (
+                      <Item key={i} isSingleImage={events.length === 1}>
+                        
+                        <ItemCover href={url}>
+                          {images.length ? (
+                            <ItemImage src={findImageWithRatio(images)} alt="Event Cover" />
+                          ) : (
+                            <PlaceholderArtwork>
+                              <PlaceholderContent>
+                                <IconMusic />
+                              </PlaceholderContent>
+                            </PlaceholderArtwork>
+                          )}
+                          <ItemMask>
+                            <i className="fas fa-info-circle" />
+                          </ItemMask>
+                        </ItemCover>
+                        
+                        <div>
+                            <ItemName href={url}>{name}</ItemName>
+                            <Details>{formatDate(dates.start.localDate)}</Details>
+                            <Details>{dates.timezone}</Details>
+                        </div>
+                      </Item>
+                    ))
+                  }
+                </Container>
+              </Wrapper>
+            </>
+          ): (
             <></>
           )}
         </>

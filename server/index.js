@@ -8,6 +8,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 let REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:3000/callback';
 let FRONTEND_URI = process.env.FRONTEND_URI || 'http://localhost:3000';
 const PORT = process.env.PORT || 3000;
+const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 
 // Requiring neccessary packages
 const express = require('express');
@@ -17,10 +18,14 @@ const crypto = require('crypto');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const history = require('connect-history-api-fallback');
+const axios = require('axios');
 
 // *****************************************************************
 // Creating an express app
 const app = express();
+
+// Prevent CORS errors
+app.use(cors());
 
 // Priority serve any static files.
 app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -148,6 +153,28 @@ app.get('/refresh_token', function (req, res) {
       });
     }
   });
+});
+
+// TICKETMASTER *****************************************************************
+app.get('/discover', async (req, res) => {
+  try {
+    const artist = req.query.artist;
+
+    const response = await axios.get(
+      `https://app.ticketmaster.com/discovery/v2/events.json`, {
+        params: {
+          apikey: TICKETMASTER_API_KEY,
+          keyword: artist,
+          classificationName: 'music',
+          segmentName: 'music',
+        },
+      }
+    );
+    return res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching data from Ticketmaster', error);
+    return res.status(500).json({ error: 'Failed to fetch events' });
+  }
 });
 
 // All remaining requests return the React app, so it can handle routing.
