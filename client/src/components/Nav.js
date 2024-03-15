@@ -8,7 +8,6 @@ import {
   IconMicrophone,
   IconPlaylist,
   IconMusic,
-  IconGithub,
 } from '../assets/icons';
 
 import styled from 'styled-components';

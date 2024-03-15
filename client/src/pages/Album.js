@@ -11,7 +11,7 @@ import FeatureChart from '../components/FeatureChart';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';
-const { colors, fontSizes, spacing } = theme;
+const { colors, fontSizes } = theme;
 
 const AlbumContainer = styled.div`
   display: flex;
@@ -87,6 +87,7 @@ const Album = props => {
     const fetchData = async () => {
       const { data } = await getAlbum(albumId);
       setAlbum(data);
+      console.log(data)
     };
     catchErrors(fetchData());
   }, [albumId]);
@@ -125,7 +126,7 @@ const Album = props => {
                 <Description dangerouslySetInnerHTML={{ __html: album.label }} />
               )}
 
-              <TotalTracks>{album.tracks.total} Tracks</TotalTracks>
+              <TotalTracks>{album.tracks.total} Tracks ({getAlbumDuration(album)})</TotalTracks>
               
               <br/>
               <br/>

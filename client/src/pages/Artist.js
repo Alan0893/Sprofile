@@ -191,7 +191,7 @@ const Artist = props => {
         <>
           <ArtistContainer>
             <Artwork>
-              <img src={artist.images[0].url} alt="Artist Image" />
+              <img src={artist.images[0].url} alt="Artist" />
             </Artwork>
 
             <div>
