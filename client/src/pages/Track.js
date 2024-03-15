@@ -4,7 +4,6 @@ import { formatDuration, getYear, parsePitchClass, catchErrors } from '../utils'
 import { getTrackInfo } from '../api/tracks';
 
 import Loader from '../components/Loader';
-import FeatureChart from '../components/FeatureChart';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';
@@ -82,6 +81,21 @@ const Features = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   `};
 `;
+const Features2 = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  width: 100%;
+  margin-bottom: 50px;
+  text-align: center;
+  border-top: 1px solid ${colors.grey};
+  border-left: 1px solid ${colors.grey};
+  ${media.thone`
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+  `};
+  ${media.phablet`
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  `};
+`;
 const Feature = styled.div`
   padding: 15px 10px;
   border-bottom: 1px solid ${colors.grey};
@@ -101,16 +115,6 @@ const FeatureLabel = styled.p`
   font-size: ${fontSizes.xs};
   margin-bottom: 0;
 `;
-const DescriptionLink = styled.a`
-  color: ${colors.lightestGrey};
-  margin: 20px auto 0;
-  border-bottom: 1px solid transparent;
-  &:hover,
-  &:focus {
-    color: ${colors.white};
-    border-bottom: 1px solid ${colors.white};
-  }
-`;
 
 const Track = props => {
   const { trackId } = props;
@@ -125,6 +129,7 @@ const Track = props => {
       setTrack(data.track);
       setAudioAnalysis(data.audioAnalysis);
       setAudioFeatures(data.audioFeatures);
+      console.log(data.audioFeatures)
     };
     catchErrors(fetchData());
   }, [trackId]);
@@ -187,8 +192,8 @@ const Track = props => {
                   <FeatureLabel>Time Signature</FeatureLabel>
                 </Feature>
                 <Feature>
-                  <FeatureText>{Math.round(audioFeatures.tempo)}</FeatureText>
-                  <FeatureLabel>Tempo (BPM)</FeatureLabel>
+                  <FeatureText>{audioAnalysis.tatums.length}</FeatureText>
+                  <FeatureLabel>Tatums</FeatureLabel>
                 </Feature>
                 <Feature>
                   <FeatureText>{track.popularity}%</FeatureText>
@@ -213,7 +218,49 @@ const Track = props => {
               </Features>
             </AudioFeatures>
           )}
-          <FeatureChart features={audioFeatures} type="bar" />
+
+          {audioFeatures && audioAnalysis && (
+            <AudioFeatures>
+              <Features2>
+                <Feature>
+                  <FeatureText>{audioFeatures.acousticness.toFixed(2)}</FeatureText>
+                  <FeatureLabel>Acousticness</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.danceability.toFixed(2)}</FeatureText>
+                  <FeatureLabel>Danceability</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.energy.toFixed(2)}</FeatureText>
+                  <FeatureLabel>Energy</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.instrumentalness.toFixed(2)}</FeatureText>
+                  <FeatureLabel>Instrumentalness</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.liveness.toFixed(2)}</FeatureText>
+                  <FeatureLabel>Liveness</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.loudness.toFixed(2)}</FeatureText>
+                  <FeatureLabel>Loudness (dB)</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.speechiness.toFixed(2)}</FeatureText>
+                  <FeatureLabel>Speechiness</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.valence.toFixed(2)}</FeatureText>
+                  <FeatureLabel>Valence</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{Math.round(audioFeatures.tempo)}</FeatureText>
+                  <FeatureLabel>Tempo (BPM)</FeatureLabel>
+                </Feature>
+              </Features2>
+            </AudioFeatures>
+          )}
         </Main>
       ) : (
         <Loader />
