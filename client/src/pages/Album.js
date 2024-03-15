@@ -87,7 +87,6 @@ const Album = props => {
     const fetchData = async () => {
       const { data } = await getAlbum(albumId);
       setAlbum(data);
-      console.log(data)
     };
     catchErrors(fetchData());
   }, [albumId]);
