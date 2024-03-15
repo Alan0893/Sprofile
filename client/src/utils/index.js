@@ -59,6 +59,15 @@ export const formatDurationForHumans = millis => {
 // Get year from YYYY-MM-DD
 export const getYear = date => date.split('-')[0];
 
+// Reformat YYYY-MM-DD to Month DD, YYYY
+export const formatDate = (inputDate) => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const [year, month, day] = inputDate.split('-');
+  const monthName = months[parseInt(month) - 1];
+  const formattedDate = `${monthName} ${parseInt(day)}, ${year}`;
+  return formattedDate;
+}
+
 // Transform Pitch Class Notation to string
 export const parsePitchClass = note => {
   let key = note;

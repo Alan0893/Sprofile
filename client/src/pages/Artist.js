@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { formatWithCommas, catchErrors } from '../utils';
+import { formatWithCommas, catchErrors, formatDate } from '../utils';
 import { getArtist, getArtistsAlbums } from '../api/artists';
 import { IconMusic } from '../assets/icons';
 
@@ -72,6 +72,9 @@ const NumLabel = styled.p`
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: ${spacing.xs};
+`;
+const Subtitle = styled.h2`
+  text-align: center;
 `;
 
 
@@ -163,6 +166,13 @@ const TotalTracks = styled.div`
   font-size: ${fontSizes.xs};
   letter-spacing: 1px;
 `;
+const ReleasedDate = styled.div`
+  text-transform: uppercase;
+  margin: 5px 0;
+  color: ${colors.lightGrey};
+  font-size: ${fontSizes.xs};
+  letter-spacing: 1px;
+`;
 
 const Artist = props => {
   const { artistId } = props;
@@ -224,39 +234,48 @@ const Artist = props => {
               </Stats>
             </div>
           </ArtistContainer>
-          <Wrapper>
-            <AlbumContainer>
-              {albums ? (
-                albums.items.map(({ id, images, name, total_tracks }, i) => (
-                  <Album key={i}>
+           
+          { albums ? (
+            <>
+              <Subtitle>Albums</Subtitle>
+              <Wrapper>
+                <AlbumContainer>
+                  {albums ? (
+                    albums.items.map(({ id, images, name, total_tracks, release_date }, i) => (
+                      <Album key={i}>
 
-                    <AlbumCover to={`/album/${id}`}>
-                      {images.length ? (
-                        <AlbumImage src={images[0].url} alt="Album Cover" />
-                      ) : (
-                        <PlaceholderArtwork>
-                          <PlaceholderContent>
-                            <IconMusic />
-                          </PlaceholderContent>
-                        </PlaceholderArtwork>
-                      )}
-                      <AlbumMask>
-                        <i className="fas fa-info-circle" />
-                      </AlbumMask>
-                    </AlbumCover>
+                        <AlbumCover to={`/album/${id}`}>
+                          {images.length ? (
+                            <AlbumImage src={images[0].url} alt="Album Cover" />
+                          ) : (
+                            <PlaceholderArtwork>
+                              <PlaceholderContent>
+                                <IconMusic />
+                              </PlaceholderContent>
+                            </PlaceholderArtwork>
+                          )}
+                          <AlbumMask>
+                            <i className="fas fa-info-circle" />
+                          </AlbumMask>
+                        </AlbumCover>
 
-                    <div>
-                      <AlbumName to={`/album/${id}`}>{name}</AlbumName>
-                      <TotalTracks>{total_tracks} Tracks</TotalTracks>
-                    </div>
-                  </Album>
-                ))
-              ) : (
-                <Loader />
-              )}
-              
-            </AlbumContainer>
-          </Wrapper>
+                        <div>
+                          <AlbumName to={`/album/${id}`}>{name}</AlbumName>
+                          <TotalTracks>{total_tracks} Tracks</TotalTracks>
+                          <ReleasedDate>{formatDate(release_date)}</ReleasedDate>
+                        </div>
+                      </Album>
+                    ))
+                  ) : (
+                    <Loader />
+                  )}
+                  
+                </AlbumContainer>
+              </Wrapper>
+            </>
+          ) : () => (
+            <></>
+          )}
         </>
       ) : (
         <Loader />

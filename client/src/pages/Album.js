@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getAlbum } from '../api/album';
 import { getAudioFeaturesForTracks } from '../api/tracks';
-import { catchErrors, getAlbumDuration } from '../utils';
+import { catchErrors, getAlbumDuration, formatDate } from '../utils';
 
 import Loader from '../components/Loader';
 import AlbumItem from '../components/AlbumItem';
@@ -71,7 +71,7 @@ const Owner = styled.p`
   font-size: ${fontSizes.sm};
   color: ${colors.lightGrey};
 `;
-const TotalTracks = styled.p`
+const Details = styled.p`
   font-size: ${fontSizes.sm};
   color: ${colors.white};
   margin-top: 20px;
@@ -126,7 +126,8 @@ const Album = props => {
                 <Description dangerouslySetInnerHTML={{ __html: album.label }} />
               )}
 
-              <TotalTracks>{album.tracks.total} Tracks ({getAlbumDuration(album)})</TotalTracks>
+              <Details>{album.tracks.total} Tracks ({getAlbumDuration(album)})</Details>
+              <Details>{formatDate(album.release_date)}</Details>
               
               <br/>
               <br/>
