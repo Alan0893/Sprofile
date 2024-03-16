@@ -1,12 +1,12 @@
 // Loading environment variables from the .env file into process.env
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, './', '.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../', '.env') });
 
 // Getting environment variables 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-let REDIRECT_URI = process.env.REDIRECT_URI || 'https://spotify-profile-2t6h.onrender.com/callback';
-let FRONTEND_URI = process.env.FRONTEND_URI || 'https://spotify-profile-2t6h.onrender.com';
+let REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:3000/callback';
+let FRONTEND_URI = process.env.FRONTEND_URI || 'http://localhost:3000';
 const PORT = process.env.PORT || 3000;
 const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 
