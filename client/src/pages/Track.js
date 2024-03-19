@@ -129,7 +129,6 @@ const Track = props => {
       setTrack(data.track);
       setAudioAnalysis(data.audioAnalysis);
       setAudioFeatures(data.audioFeatures);
-      console.log(data.audioFeatures)
     };
     catchErrors(fetchData());
   }, [trackId]);

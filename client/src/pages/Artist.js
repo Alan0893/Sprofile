@@ -205,7 +205,6 @@ const Artist = props => {
 
       const res =  await getEvents(data.name);
       setEvents(res.data._embedded.events);
-      console.log(res.data._embedded.events)
     };
     catchErrors(fetchData());
   }, [artistId]);
