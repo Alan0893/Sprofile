@@ -5,8 +5,8 @@ require('dotenv').config({ path: path.resolve(__dirname, '../', '.env') });
 // Getting environment variables 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-let REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:3000/callback';
-let FRONTEND_URI = process.env.FRONTEND_URI || 'http://localhost:3000';
+let REDIRECT_URI = process.env.REDIRECT_URI || 'https://sprofile.onrender.com/callback';
+let FRONTEND_URI = process.env.FRONTEND_URI || 'https://sprofile-plo4.onrender.com';
 const PORT = process.env.PORT || 3000;
 const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 
