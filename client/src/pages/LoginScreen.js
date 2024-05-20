@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { theme, mixins, Main } from '../styles';
 const { colors, fontSizes } = theme;
 
-const LOGIN_URI = 'https://sprofile-c2ei2gqql-alans-projects-1d4f55f3.vercel.app/login';
+const LOGIN_URI = 'http://localhost:3000/login';
 
 const LoginContainer = styled.div`
   height: 100%;

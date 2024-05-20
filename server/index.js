@@ -5,8 +5,8 @@ require('dotenv').config({ path: path.resolve(__dirname, '../', '.env') });
 // Getting environment variables 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-let REDIRECT_URI = process.env.REDIRECT_URI || 'https://sprofile-c2ei2gqql-alans-projects-1d4f55f3.vercel.app/callback';
-let FRONTEND_URI = process.env.FRONTEND_URI || 'https://sprofile-c2ei2gqql-alans-projects-1d4f55f3.vercel.app';
+let REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:3000/callback';
+let FRONTEND_URI = process.env.FRONTEND_URI || 'http://localhost:3000';
 const PORT = process.env.PORT || 3000;
 const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 
@@ -185,5 +185,3 @@ app.get('*', function (request, response) {
 app.listen(PORT, function () {
   console.log(`Listening on port ${PORT}`);
 });
-
-module.exports = app;
