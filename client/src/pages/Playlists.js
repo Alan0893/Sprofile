@@ -49,11 +49,17 @@ const PlaylistMask = styled.div`
 `;
 const PlaylistImage = styled.img`
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 const PlaylistCover = styled(Link)`
   ${mixins.coverShadow};
   position: relative;
   width: 100%;
+  padding-bottom: 100%;
   margin-bottom: ${spacing.base};
   &:hover,
   &:focus {
