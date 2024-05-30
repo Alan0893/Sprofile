@@ -141,3 +141,19 @@ export const addCustomPlaylistCoverImage = (playlistId, image) => {
   const data = JSON.stringify({ image });
   return axios({ method: 'put', url, headers, data });
 };
+
+//*********************************************************************************************************************************
+/**
+ * Get all Tracks from a Playlist
+ */
+export const fetchAllTracks = async (playlistId) => {
+  let tracks = [];
+  let next = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+  
+  while (next) {
+    const { data } = await axios.get(next, { headers });
+    tracks = tracks.concat(data.items);
+    next = data.next;
+  }
+  return tracks;
+};
