@@ -26,3 +26,5 @@ npm run build
 ## Images of Site
 - In the [images](https://github.com/Alan0893/Spotify-Profile/tree/main/images) directory, there are sample images of each route page.
 	- These pages include: `User`, `Artist`, `Playlists`, `Recent`, `Tracks`, `Recommendations`, `Artist:id`, `Playlist:id`, `Album:id`, `Track:id`
+
+The site is in development, so only certain users can fully access the site.

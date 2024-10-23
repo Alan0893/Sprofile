@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { getPlaylist } from '../api/playlist';
+import { getPlaylist, fetchAllTracks } from '../api/playlist';
 import { getAudioFeaturesForTracks } from '../api/tracks';
 import { catchErrors, getPlaylistDuration } from '../utils';
 
@@ -17,23 +17,24 @@ const { colors, fontSizes, spacing } = theme;
 const PlaylistContainer = styled.div`
   display: flex;
   ${media.tablet`
-    display: block;
+    display: grid; /* Use CSS Grid on tablets and above */
+    grid-template-columns: minmax(200px, 30%) 1fr; /* Define grid columns */
   `};
 `;
 const Left = styled.div`
-  width: 30%;
+  width: 100%; 
   text-align: center;
   min-width: 200px;
   ${media.tablet`
-    width: 100%;
-    min-width: auto;
+    width: auto; 
   `};
 `;
 const Right = styled.div`
-  flex-grow: 1;
-  margin-left: 50px;
+  width: 100%; 
   ${media.tablet`
-    margin: 50px 0 0;
+    width: auto;
+    margin-left: 50px; 
+    margin-top: 50px;
   `};
 `;
 const PlaylistCover = styled.div`
@@ -106,6 +107,8 @@ const Playlist = props => {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await getPlaylist(playlistId);
+      const tracks = await fetchAllTracks(playlistId);
+      data.tracks.items = tracks
       setPlaylist(data);
     };
     catchErrors(fetchData());
@@ -114,7 +117,7 @@ const Playlist = props => {
   useEffect(() => {
     const fetchData = async () => {
       if (playlist) {
-        const { data } = await getAudioFeaturesForTracks(playlist.tracks.items);
+        const { data } = await getAudioFeaturesForTracks(playlist.tracks.items.slice(0, 100));
         setAudioFeatures(data);
       }
     };

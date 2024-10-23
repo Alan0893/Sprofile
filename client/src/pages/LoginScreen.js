@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { theme, mixins, Main } from '../styles';
 const { colors, fontSizes } = theme;
 
-const LOGIN_URI = 'http://localhost:3000/login';
+const LOGIN_URI = process.env.REACT_APP_URL || 'https://sprofile-backend.onrender.com/login';
 
 const LoginContainer = styled.div`
   height: 100%;
