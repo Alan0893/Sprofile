@@ -49,7 +49,7 @@ const Name = styled.h1`
 `;
 const Stats = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   margin-top: ${spacing.md};
   text-align: center;
@@ -236,17 +236,6 @@ const Artist = props => {
                   <Number>{formatWithCommas(artist.followers.total)}</Number>
                   <NumLabel>Followers</NumLabel>
                 </Stat>
-
-                {artist.genres && (
-                  <Stat>
-                    <Number>
-                      { artist.genres.map(genre => (
-                        <Genre key={genre}>{genre}</Genre>
-                      ))}
-                    </Number>
-                    <NumLabel>Genres</NumLabel>
-                  </Stat>
-                )}
                 {artist.popularity && (
                   <Stat>
                     <Number>{ artist.popularity }%</Number>
