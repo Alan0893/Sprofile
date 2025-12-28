@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import {
   IconSpotify,
@@ -8,6 +8,7 @@ import {
   IconMicrophone,
   IconPlaylist,
   IconMusic,
+  IconSearch,
 } from '../assets/icons';
 
 import styled from 'styled-components';
@@ -76,31 +77,6 @@ const MenuItem = styled.li`
     flex-basis: 100%;
     height: 100%;
   `};
-  a {
-    display: block;
-    padding: 15px 0;
-    border-left: 5px solid transparent;
-    width: 100%;
-    height: 100%;
-    ${media.tablet`
-      ${mixins.flexCenter};
-      flex-direction: column;
-      padding: 0;
-      border-left: 0;
-      border-top: 3px solid transparent;
-    `};
-    &:hover,
-    &:focus,
-    &.active {
-      color: ${colors.white};
-      background-color: ${colors.black};
-      border-left: 5px solid ${colors.offBlue};
-      ${media.tablet`
-        border-left: 0;
-        border-top: 3px solid ${colors.offBlue};
-      `};
-    }
-  }
   svg {
     width: 20px;
     height: 20px;
@@ -108,9 +84,50 @@ const MenuItem = styled.li`
   }
 `;
 
-const isActive = ({ isCurrent }) => (isCurrent ? { className: 'active' } : null);
+const StyledNavLink = styled(NavLink)`
+  display: block;
+  padding: 15px 0;
+  border-left: 5px solid transparent;
+  width: 100%;
+  height: 100%;
+  color: ${colors.lightGrey};
+  ${media.tablet`
+    ${mixins.flexCenter};
+    flex-direction: column;
+    padding: 0;
+    border-left: 0;
+    border-top: 3px solid transparent;
+  `};
+  &:hover,
+  &:focus {
+    color: ${colors.white};
+    background-color: ${colors.black};
+    border-left: 5px solid ${colors.offBlue};
+    ${media.tablet`
+      border-left: 0;
+      border-top: 3px solid ${colors.offBlue};
+    `};
+  }
+  &.active {
+    color: ${colors.white};
+    background-color: ${colors.black};
+    border-left: 5px solid ${colors.offBlue};
+    ${media.tablet`
+      border-left: 0;
+      border-top: 3px solid ${colors.offBlue};
+    `};
+  }
+`;
 
-const NavLink = props => <Link getProps={isActive} {...props} />;
+const NavItem = ({ to, end, children }) => (
+  <StyledNavLink 
+    to={to} 
+    end={end}
+    className={({ isActive }) => isActive ? 'active' : ''}
+  >
+    {children}
+  </StyledNavLink>
+);
 
 const Nav = () => (
   <Container>
@@ -121,34 +138,40 @@ const Nav = () => (
     </Logo>
     <Menu>
       <MenuItem>
-        <NavLink to="/">
+        <NavItem to="/" end>
           <IconUser />
           <div>Profile</div>
-        </NavLink>
+        </NavItem>
       </MenuItem>
       <MenuItem>
-        <NavLink to="/artists">
+        <NavItem to="/artists">
           <IconMicrophone />
           <div>Top Artists</div>
-        </NavLink>
+        </NavItem>
       </MenuItem>
       <MenuItem>
-        <NavLink to="/tracks">
+        <NavItem to="/tracks">
           <IconMusic />
           <div>Top Tracks</div>
-        </NavLink>
+        </NavItem>
       </MenuItem>
       <MenuItem>
-        <NavLink to="/recent">
+        <NavItem to="/recent">
           <IconTime />
           <div>Recent</div>
-        </NavLink>
+        </NavItem>
       </MenuItem>
       <MenuItem>
-        <NavLink to="/playlists">
+        <NavItem to="/playlists">
           <IconPlaylist />
           <div>Playlists</div>
-        </NavLink>
+        </NavItem>
+      </MenuItem>
+      <MenuItem>
+        <NavItem to="/search">
+          <IconSearch />
+          <div>Search</div>
+        </NavItem>
       </MenuItem>
     </Menu>
   </Container>
