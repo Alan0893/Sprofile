@@ -4,6 +4,7 @@ import { formatDuration, getYear, parsePitchClass, catchErrors } from '../utils'
 import { getTrackInfo } from '../api/tracks';
 
 import Loader from '../components/Loader';
+import FeatureChart from '../components/FeatureChart';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';
@@ -173,6 +174,7 @@ const Track = props => {
 
           {audioFeatures && audioAnalysis && (
             <AudioFeatures>
+              <FeatureChart features={audioFeatures} type="radar" />
               <Features>
                 <Feature>
                   <FeatureText>{formatDuration(audioFeatures.duration_ms)}</FeatureText>

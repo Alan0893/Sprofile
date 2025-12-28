@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'chart.js/auto';
 
@@ -29,6 +29,8 @@ const Container = styled.div`
 
 const FeatureChart = props => {
   const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+  const chartRef = useRef(null);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     const createDataset = features => {
@@ -43,11 +45,19 @@ const FeatureChart = props => {
 
     const createChart = dataset => {
       const { type } = props;
-      const ctx = document.getElementById('chart');
+      const ctx = canvasRef.current;
+      
+      if (!ctx) return;
+
+      // Destroy existing chart if it exists
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+
       const labels = Object.keys(dataset);
       const data = Object.values(dataset);
 
-      new Chart(ctx, {
+      chartRef.current = new Chart(ctx, {
         type: type || 'bar',
         data: {
           labels,
@@ -55,25 +65,32 @@ const FeatureChart = props => {
             {
               label: '',
               data,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.3)',
-                'rgba(255, 159, 64, 0.3)',
-                'rgba(255, 206, 86, 0.3)',
-                'rgba(75, 192, 192, 0.3)',
-                'rgba(54, 162, 235, 0.3)',
-                'rgba(104, 132, 245, 0.3)',
-                'rgba(153, 102, 255, 0.3)',
-              ],
-              borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(104, 132, 245, 1)',
-                'rgba(153, 102, 255, 1)',
-              ],
-              borderWidth: 1,
+              backgroundColor: type === 'radar' 
+                ? 'rgba(98, 177, 246, 0.3)'
+                : [
+                    'rgba(98, 177, 246, 0.7)',
+                    'rgba(40, 144, 195, 0.7)',
+                    'rgba(98, 177, 246, 0.7)',
+                    'rgba(40, 144, 195, 0.7)',
+                    'rgba(98, 177, 246, 0.7)',
+                    'rgba(40, 144, 195, 0.7)',
+                    'rgba(98, 177, 246, 0.7)',
+                  ],
+              borderColor: type === 'radar'
+                ? 'rgba(98, 177, 246, 1)'
+                : [
+                    'rgba(98, 177, 246, 1)',
+                    'rgba(40, 144, 195, 1)',
+                    'rgba(98, 177, 246, 1)',
+                    'rgba(40, 144, 195, 1)',
+                    'rgba(98, 177, 246, 1)',
+                    'rgba(40, 144, 195, 1)',
+                    'rgba(98, 177, 246, 1)',
+                  ],
+              borderWidth: 2,
+              pointBackgroundColor: 'rgba(255, 255, 255, 1)',
+              pointBorderColor: 'rgba(98, 177, 246, 1)',
+              pointRadius: type === 'radar' ? 4 : 0,
             },
           ],
         },
@@ -96,23 +113,78 @@ const FeatureChart = props => {
           },
           legend: {
             display: false,
-          }
+          },
+          scales: type === 'radar' ? {
+            r: {
+              beginAtZero: true,
+              max: 1,
+              ticks: {
+                stepSize: 0.2,
+                display: false,
+                backdropColor: 'transparent',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)',
+              },
+              pointLabels: {
+                color: '#9B9B9B',
+                font: {
+                  size: 12,
+                  family: fonts.primary,
+                },
+              },
+              angleLines: {
+                color: 'rgba(255, 255, 255, 0.1)',
+              },
+            },
+          } : {
+            y: {
+              beginAtZero: true,
+              max: 1,
+              ticks: {
+                stepSize: 0.2,
+                fontColor: '#9B9B9B',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)',
+                drawBorder: false,
+              },
+            },
+            x: {
+              ticks: {
+                fontColor: '#9B9B9B',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)',
+                drawBorder: false,
+              },
+            },
+          },
         },
       });
     };
 
     const parseData = () => {
       const { features } = props;
+      if (!features) return;
       const dataset = createDataset(features);
       createChart(dataset);
     };
 
     parseData();
-  }, [props]);
+
+    // Cleanup function to destroy chart on unmount
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
+  }, [props.features, props.type]);
 
   return (
     <Container>
-      <canvas id="chart" width="400" height="400" />
+      <canvas ref={canvasRef} width="400" height="400" />
     </Container>
   );
 };
