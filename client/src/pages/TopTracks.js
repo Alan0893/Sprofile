@@ -4,6 +4,7 @@ import { catchErrors } from '../utils';
 
 import Loader from '../components/Loader';
 import TrackItem from '../components/TrackItem';
+import { SkeletonRect, TrackListSkeleton, TrackItemSkeleton } from '../components/SkeletonLoader';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';
@@ -185,7 +186,17 @@ const TopTracks = () => {
           {topTracks ? (
             topTracks.items.map((track, i) => <TrackItem track={track} key={i} />)
           ) : (
-            <Loader />
+            <TrackListSkeleton>
+              {[...Array(20)].map((_, i) => (
+                <TrackItemSkeleton key={i}>
+                  <SkeletonRect width="50px" height="50px" />
+                  <div>
+                    <SkeletonRect width="200px" height="16px" margin="8px 0" />
+                    <SkeletonRect width="150px" height="14px" />
+                  </div>
+                </TrackItemSkeleton>
+              ))}
+            </TrackListSkeleton>
           )}
         </TracksContainer>
       ) : (

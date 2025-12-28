@@ -10,6 +10,7 @@ import IconMusic from './music';
 import IconInfo from './info';
 import IconTheme from './brush';
 import IconSearch from './search';
+import IconGrid from './grid';
 
 export {
   IconUser,
@@ -24,4 +25,5 @@ export {
   IconInfo,
   IconTheme,
   IconSearch,
+  IconGrid,
 };

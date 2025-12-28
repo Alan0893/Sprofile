@@ -9,6 +9,7 @@ import {
   IconPlaylist,
   IconMusic,
   IconSearch,
+  IconGrid,
 } from '../assets/icons';
 
 import styled from 'styled-components';
@@ -171,6 +172,12 @@ const Nav = () => (
         <NavItem to="/search">
           <IconSearch />
           <div>Search</div>
+        </NavItem>
+      </MenuItem>
+      <MenuItem>
+        <NavItem to="/collage">
+          <IconGrid />
+          <div>Collage</div>
         </NavItem>
       </MenuItem>
     </Menu>

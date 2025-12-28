@@ -7,6 +7,7 @@ import { catchErrors } from '../utils';
 import { IconUser, IconInfo } from '../assets/icons';
 import Loader from './Loader';
 import TrackItem from './TrackItem';
+import AnimatedCounter from './AnimatedCounter';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';
@@ -217,19 +218,25 @@ const User = () => {
             </UserName>
             <Stats>
               <Stat>
-                <Number>{user.followers.total}</Number>
+                <Number>
+                  <AnimatedCounter value={user.followers.total} />
+                </Number>
                 <NumLabel>Followers</NumLabel>
               </Stat>
               {followedArtists && (
                 <Stat>
-                  <Number>{followedArtists.artists.items.length}</Number>
+                  <Number>
+                    <AnimatedCounter value={followedArtists.artists.items.length} />
+                  </Number>
                   <NumLabel>Following</NumLabel>
                 </Stat>
               )}
               {totalPlaylists && (
                 <Stat>
                   <Link to="playlists">
-                    <Number>{totalPlaylists}</Number>
+                    <Number>
+                      <AnimatedCounter value={totalPlaylists} />
+                    </Number>
                     <NumLabel>Playlists</NumLabel>
                   </Link>
                 </Stat>

@@ -13,6 +13,7 @@ import Track from './Track';
 import Artist from './Artist';
 import Album from './Album';
 import Search from './Search';
+import ArtistCollage from '../components/ArtistCollage';
 
 import styled from 'styled-components';
 import { theme, media } from '../styles';
@@ -35,6 +36,7 @@ const Profile = () => (
 				<Route path="/tracks" element={<TopTracks/>} />
 				<Route path="/playlists" element={<Playlists/>} />
 				<Route path="/search" element={<Search/>} />
+				<Route path="/collage" element={<ArtistCollage/>} />
 				<Route path="/playlists/:id" element={<PlaylistId/>} />
 				<Route path="/recommendations/:id" element={<RecommendationsId/>} />
 				<Route path="/track/:id" element={<TrackId/>} />

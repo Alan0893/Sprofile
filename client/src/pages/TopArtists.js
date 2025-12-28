@@ -6,6 +6,7 @@ import { catchErrors } from '../utils';
 
 import { IconInfo } from '../assets/icons';
 import Loader from '../components/Loader';
+import { SkeletonCircle, SkeletonText, ArtistGridSkeleton, ArtistCardSkeleton } from '../components/SkeletonLoader';
 
 import styled from 'styled-components';
 import { theme, mixins, media, Main } from '../styles';
@@ -316,7 +317,14 @@ const TopArtists = () => {
               </Artist>
             ))
           ) : (
-            <Loader />
+            <>
+              {[...Array(20)].map((_, i) => (
+                <ArtistCardSkeleton key={i}>
+                  <SkeletonCircle size="200px" />
+                  <SkeletonText width="150px" margin="10px 0 0" />
+                </ArtistCardSkeleton>
+              ))}
+            </>
           )}
         </ArtistsContainer>
       ) : (
