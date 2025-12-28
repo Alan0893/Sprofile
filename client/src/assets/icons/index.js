@@ -9,6 +9,7 @@ import IconPlaylist from './playlist';
 import IconMusic from './music';
 import IconInfo from './info';
 import IconTheme from './brush';
+import IconSearch from './search';
 
 export {
   IconUser,
@@ -22,4 +23,5 @@ export {
   IconMusic,
   IconInfo,
   IconTheme,
+  IconSearch,
 };
