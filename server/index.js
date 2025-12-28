@@ -5,8 +5,8 @@ require('dotenv').config({ path: path.resolve(__dirname, '../', '.env') });
 // Getting environment variables 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-let REDIRECT_URI = process.env.REDIRECT_URI || 'https://sprofile-backend.onrender.com/callback';
-let FRONTEND_URI = process.env.FRONTEND_URI || 'https://sprofile.onrender.com';
+let REDIRECT_URI = process.env.REDIRECT_URI;
+let FRONTEND_URI = process.env.CLIENT_URI;
 const PORT = process.env.PORT || 3000;
 const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 
@@ -66,8 +66,16 @@ app.get('/login', function (req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  const scope =
-    'user-read-private user-read-email user-read-recently-played user-top-read user-follow-read user-follow-modify playlist-read-private playlist-read-collaborative playlist-modify-public';
+  const scope = [
+    'user-read-private',
+    'user-top-read',
+    'user-follow-read',
+    'playlist-read-private',
+    'playlist-read-collaborative',
+    'user-read-recently-played',
+    'user-follow-modify',
+    // 'playlist-modify-public', // Requires Extended Quota Mode
+  ].join(' ');
 
   res.redirect(
     `https://accounts.spotify.com/authorize?${querystring.stringify({

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = 'https://sprofile-backend.onrender.com/discover';
+const url = 'http://127.0.0.1:8888/discover';
 
 export const getEvents = (artistName) => {
 	return axios.get(url, {
