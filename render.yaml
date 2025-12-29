@@ -28,8 +28,7 @@ services:
   # Frontend Static Site
   - type: web
     name: sprofile-frontend
-    runtime: node
-    env: node
+    env: static
     region: oregon
     plan: free
     buildCommand: cd client && npm install && npm run build
@@ -38,6 +37,3 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
-    envVars:
-      - key: NODE_ENV
-        value: production
