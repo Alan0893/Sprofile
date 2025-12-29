@@ -1,0 +1,43 @@
+services:
+  # Backend API Server
+  - type: web
+    name: sprofile-backend
+    runtime: node
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: node server/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_ID
+        sync: false
+      - key: CLIENT_SECRET
+        sync: false
+      - key: REDIRECT_URI
+        sync: false
+      - key: CLIENT_URI
+        sync: false
+      - key: PORT
+        value: 10000
+      - key: TICKETMASTER_API_KEY
+        sync: false
+    healthCheckPath: /
+
+  # Frontend Static Site
+  - type: web
+    name: sprofile-frontend
+    runtime: node
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/build
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_ENV
+        value: production
