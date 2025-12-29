@@ -16,8 +16,8 @@ A React application that displays your Spotify profile, top artists, top tracks,
 ### 1. Clone the repository
 
 ```bash
-git clone git@github.com:Alan0893/Sprofile.git
-cd SProfile
+git clone git@github.com:Alan0893/spotify-profile.git
+cd spotify-profile
 ```
 
 ### 2. Environment Variables
