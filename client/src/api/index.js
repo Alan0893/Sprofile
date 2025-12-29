@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { getHashParams } from '../utils';
 
+// Backend URL - use environment variable in production, fallback to localhost in dev
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8888';
+
 // TOKENS ******************************************************************************************
 const EXPIRATION_TIME = 3600 * 1000;	// 1 hour
 
@@ -20,7 +23,7 @@ const getLocalRefreshToken = () => window.localStorage.getItem('refresh_token');
 // Refresh the token
 const refreshAccessToken = async () => {
   try {
-    const { data } = await axios.get(`/refresh_token?refresh_token=${getLocalRefreshToken()}`);
+    const { data } = await axios.get(`${BACKEND_URL}/refresh_token?refresh_token=${getLocalRefreshToken()}`);
     const { access_token, refresh_token } = data;
     setLocalAccessToken(access_token);
     window.location.reload();
