@@ -29,7 +29,6 @@ services:
   - type: web
     name: sprofile-frontend
     env: static
-    plan: free
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: ./client/build
     routes:
